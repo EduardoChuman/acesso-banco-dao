@@ -96,6 +96,42 @@ class Empresa {
 	// 	), JSON_UNESCAPED_SLASHES);
 	// }
 
+	//FUNÇÃO PARA TRAZER TODOS OS RESULTADOS DA TABELA
+	public static function getEmpresas(){
+
+		$sql = new Sql();
+
+		return $sql->select("SELECT 
+									[NOME_CLIENTE]
+									,[CPF/CNPJ]
+									,[EMAIL_PRINCIPAL]
+									,[EMAIL_SECUNDARIO]
+									,[EMAIL_RESERVA] 
+								FROM 
+									tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO");
+	}
+
+	// FUNÇÃO PARA RETORNAR O RESULTADO DE UM SEARCH
+	public static function search($empresa){
+
+		$sql = new Sql();
+
+		return $sql->select("SELECT 
+								[NOME_CLIENTE]
+								,[CPF/CNPJ]
+								,[EMAIL_PRINCIPAL]
+								,[EMAIL_SECUNDARIO]
+								,[EMAIL_RESERVA] 
+							FROM 
+								tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO
+							WHERE
+								[NOME_CLIENTE] LIKE :SEARCH", array(':SEARCH'=>"%" . $empresa . "%"));
+
+			
+
+	}
+
+
 	// FUNÇÃO QUE TRAZ TODOS OS RESULTADOS DE UM SELECT COM WHERE NO CO_PV (TRAZ TODOS OS REGISTROS DA AGÊNCIA)
 	public function loadByPv($codPv){
 

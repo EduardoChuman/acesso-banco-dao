@@ -5,9 +5,9 @@ ini_set('display_errors',1);
 // CHAMA O ARQUIVO DE VERIFICAÇÃO DE EXISTÊNCIA DAS CLASSES
 require_once("config.php");
 
-// CRIA UM OBJETO SQL
+/*
+	CRIA UM OBJETO SQL
 // $sql = new Sql();
-
 // SOLICITA UM SELECT AO BANCO
 // $usuarios = $sql->select("SELECT 
 // 							NOME_CLIENTE
@@ -17,18 +17,26 @@ require_once("config.php");
 // 							,[EMAIL_RESERVA] 
 // 						FROM 
 // 							tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO");
-
 // echo json_encode($usuarios, JSON_UNESCAPED_SLASHES);
 
+*/
+
+// CRIA UM OBJETO EMPRESA E BUSCA POR PV / SR / OU COM A FUNÇÃO DE VERIFICAR AMBOS
 // $pv = new Empresa();
-
 // $pv->loadByPv(3337);
-
 // echo "<hr>";
+// $sr = new Empresa();
+// $sr->loadByPvOuSr(22);
 
-$sr = new Empresa();
-$sr->loadByPvOuSr(22);
+// CARREGA UMA LISTA COM TODAS AS EMPRESAS
+// $lista = Empresa::getEmpresas();
+// echo json_encode($lista);
 
-// echo $pv;
+//CARREGA UMA LISTA DE EMPRESA COM BASE EM UMA "TAG" DE BUSCA
+// $search = Empresa::search("GILVAN");
+// echo json_encode($search);
+
+
+
 
 ?>
