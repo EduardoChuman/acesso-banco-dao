@@ -6,18 +6,29 @@ ini_set('display_errors',1);
 require_once("config.php");
 
 // CRIA UM OBJETO SQL
-$sql = new Sql();
+// $sql = new Sql();
 
 // SOLICITA UM SELECT AO BANCO
-$usuarios = $sql->select("SELECT 
-							NOME_CLIENTE
-							,[CPF/CNPJ]
-							,[EMAIL_PRINCIPAL]
-      						,[EMAIL_SECUNDARIO]
-  							,[EMAIL_RESERVA] 
-						FROM 
-							tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO");
+// $usuarios = $sql->select("SELECT 
+// 							NOME_CLIENTE
+// 							,[CPF/CNPJ]
+// 							,[EMAIL_PRINCIPAL]
+// 							,[EMAIL_SECUNDARIO]
+// 							,[EMAIL_RESERVA] 
+// 						FROM 
+// 							tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO");
 
-echo json_encode($usuarios, JSON_UNESCAPED_SLASHES);
+// echo json_encode($usuarios, JSON_UNESCAPED_SLASHES);
+
+// $pv = new Empresa();
+
+// $pv->loadByPv(3337);
+
+// echo "<hr>";
+
+$sr = new Empresa();
+$sr->loadByPvOuSr(22);
+
+// echo $pv;
 
 ?>
