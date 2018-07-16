@@ -37,6 +37,11 @@ require_once("config.php");
 // echo json_encode($search);
 
 
+// ATUALIZA UM NOVO E-MAIL NO CADASTRO DA EMPRESA
+$inserir = new Empresa();
+// $inserir->loadByCnpj('04.565.932/0001-32');
+$inserir->updateEmail('04.565.932/0001-32','edu.chuman@hotmail.com');
 
+// var_dump($inserir);
 
 ?>

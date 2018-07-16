@@ -174,6 +174,29 @@ class Empresa {
 		// var_dump($result);
 
 	}
+	// FUNÇÃO QUE TRAZ TODOS OS RESULTADOS DE UM SELECT COM WHERE NO [CPF/CNPJ]
+	public function loadByCnpj($cnpj){
+
+		$this->setCnpj($cnpj);
+
+		$sql = new Sql();
+
+		$result = $sql->select("SELECT 
+									[NOME_CLIENTE]
+									,[CPF/CNPJ]
+									,[EMAIL_PRINCIPAL]
+									,[EMAIL_SECUNDARIO]
+									,[EMAIL_RESERVA] 
+								FROM 
+									tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO
+								WHERE
+									[CPF/CNPJ]= :CNPJ", array(":CNPJ"=>$cnpj));
+
+		
+		echo json_encode($result, JSON_UNESCAPED_SLASHES);
+		// var_dump($result);
+
+	}
 
 	// FUNÇÃO QUE TRAZ A RELAÇÃO DE TODAS AS EMPRESAS DE UM PV OU SR
 	public function loadByPvOuSr($cod){
@@ -232,6 +255,43 @@ class Empresa {
 		} else {
 
 			echo "Não existem empresas cadastradas nesse ponto de atendimento.";
+
+		}
+
+	}
+
+	// FUNÇÃO PARA INSERIR E-MAIL NA TABELA [tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO]
+	public function updateEmail($cnpj, $emailPrincipal = "", $emailSecundario = "", $emailReserva = ""){
+
+		$this->setCnpj($cnpj);
+		$this->setEmailPrincipal($emailPrincipal);
+		$this->setEmailSecundario($emailSecundario);
+		$this->setEmailReserva($emailReserva);
+
+		$sql = new Sql();
+
+		$sql->query("UPDATE [tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO]
+					SET
+						[EMAIL_PRINCIPAL] = :EPRINCIPAL
+						,[EMAIL_SECUNDARIO] = :ESECUNDARIO
+						,[EMAIL_RESERVA] = :ERESERVA
+					WHERE
+						[CPF/CNPJ] = :CNPJ
+					)"
+					, array(
+					':CNPJ'=>$this->getCnpj(),
+					':EPRINCIPAL'=>$this->getEmailPrincipal(),
+					':ESECUNDARIO'=>$this->getEmailSecundario(),
+					':ERESERVA'=>$this->getEmailReserva()
+					)
+					);
+		if (!empty($result)) {
+
+			echo json_encode($result, JSON_UNESCAPED_SLASHES);
+
+		} else {
+
+			echo "Não foi possível cadastrar o e-mail. Tente novamente.";
 
 		}
 
