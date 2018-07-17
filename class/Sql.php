@@ -30,7 +30,7 @@ class Sql extends PDO {
 	// VINCULA DINAMICAMENTE OS ELEMENTOS DA QUERY
 	private function setParam($statement, $key, $value){
 		
-		$statement->bindParam($key, $value);
+		$statement->bindValue($key, $value);
 
 	}	
 

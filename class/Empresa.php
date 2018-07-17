@@ -85,16 +85,16 @@ class Empresa {
 	// 	}
 	// }
 
-	// public function __toString(){
+	public function __toString(){
 
-	// 	return json_encode(array(
-	// 		"NOME_CLIENTE"=>$this->getNome(),
-	// 		"CPF/CNPJ"=>$this->getCnpj(),
-	// 		"EMAIL_PRINCIPAL"=>$this->getEmailPrincipal(),
-	// 		"EMAIL_SECUNDARIO"=>$this->getEmailSecundario(),
-	// 		"EMAIL_RESERVA"=>$this->getEmailReserva(),
-	// 	), JSON_UNESCAPED_SLASHES);
-	// }
+		return json_encode(array(
+			"NOME_CLIENTE"=>$this->getNome(),
+			"CPF/CNPJ"=>$this->getCnpj(),
+			"EMAIL_PRINCIPAL"=>$this->getEmailPrincipal(),
+			"EMAIL_SECUNDARIO"=>$this->getEmailSecundario(),
+			"EMAIL_RESERVA"=>$this->getEmailReserva(),
+		), JSON_UNESCAPED_SLASHES);
+	}
 
 	//FUNÇÃO PARA TRAZER TODOS OS RESULTADOS DA TABELA
 	public static function getEmpresas(){
@@ -191,7 +191,6 @@ class Empresa {
 									tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO
 								WHERE
 									[CPF/CNPJ]= :CNPJ", array(":CNPJ"=>$cnpj));
-
 		
 		echo json_encode($result, JSON_UNESCAPED_SLASHES);
 		// var_dump($result);
@@ -248,11 +247,13 @@ class Empresa {
 			NEGATIVO: ELE DEVOLVERÁ UMA MENSAGEM DE ERRO;
 		
 		*/
-		} if (!empty($result)) {
+			if (!empty($result)) {
 
-			echo json_encode($result, JSON_UNESCAPED_SLASHES);
+				echo json_encode($result, JSON_UNESCAPED_SLASHES);
 
-		} else {
+			} 
+
+		} if (empty($result)) {
 
 			echo "Não existem empresas cadastradas nesse ponto de atendimento.";
 
@@ -270,30 +271,22 @@ class Empresa {
 
 		$sql = new Sql();
 
-		$sql->query("UPDATE [tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO]
-					SET
-						[EMAIL_PRINCIPAL] = :EPRINCIPAL
-						,[EMAIL_SECUNDARIO] = :ESECUNDARIO
-						,[EMAIL_RESERVA] = :ERESERVA
-					WHERE
-						[CPF/CNPJ] = :CNPJ
-					)"
-					, array(
-					':CNPJ'=>$this->getCnpj(),
-					':EPRINCIPAL'=>$this->getEmailPrincipal(),
-					':ESECUNDARIO'=>$this->getEmailSecundario(),
-					':ERESERVA'=>$this->getEmailReserva()
-					)
-					);
-		if (!empty($result)) {
+		$sql->query("UPDATE tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO SET [EMAIL_PRINCIPAL] = :EPRINCIPAL, [EMAIL_SECUNDARIO] = :ESECUNDARIO, [EMAIL_RESERVA] = :ERESERVA WHERE [CPF/CNPJ] = :CNPJ", array(
+			':EPRINCIPAL'=>$this->getEmailPrincipal(), 
+			':ESECUNDARIO'=>$this->getEmailSecundario(),
+			':ERESERVA'=>$this->getEmailReserva(),
+			':CNPJ'=>$this->getCnpj()
+		));
+		
+		//if (!empty($result)) {
 
-			echo json_encode($result, JSON_UNESCAPED_SLASHES);
+			// echo json_encode($result, JSON_UNESCAPED_SLASHES);
 
-		} else {
+		//} else {
 
-			echo "Não foi possível cadastrar o e-mail. Tente novamente.";
+			//echo "Não foi possível cadastrar o e-mail. Tente novamente.";
 
-		}
+		//}
 
 	}
 

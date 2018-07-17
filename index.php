@@ -26,7 +26,7 @@ require_once("config.php");
 // $pv->loadByPv(3337);
 // echo "<hr>";
 // $sr = new Empresa();
-// $sr->loadByPvOuSr(22);
+// $sr->loadByPvOuSr(2515);
 
 // CARREGA UMA LISTA COM TODAS AS EMPRESAS
 // $lista = Empresa::getEmpresas();
@@ -40,8 +40,9 @@ require_once("config.php");
 // ATUALIZA UM NOVO E-MAIL NO CADASTRO DA EMPRESA
 $inserir = new Empresa();
 // $inserir->loadByCnpj('04.565.932/0001-32');
-$inserir->updateEmail('04.565.932/0001-32','edu.chuman@hotmail.com');
-
-// var_dump($inserir);
+// echo "<br>";
+$inserir->updateEmail('04.565.932/0001-32','edu.chuman@hotmail.com','eduardo.chuman@gmail.com','eduardo.chuman@caixa.gov.br');
+echo "<br>";
+echo $inserir;
 
 ?>
