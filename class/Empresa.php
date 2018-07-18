@@ -6,6 +6,7 @@ ini_set('display_errors',1);
 // CRIAÇÃO DA CLASSE
 class Empresa {
 
+	// DEFINIÇÃO DOS ATRIBUTOS
 	private $nome;
 	private $cnpj;
 	private $emailPrincipal;
@@ -85,6 +86,7 @@ class Empresa {
 	// 	}
 	// }
 
+	// RETORNA OS VALORES DOS ATRIBUTOS EM UM JSON
 	public function __toString(){
 
 		return json_encode(array(
@@ -96,19 +98,131 @@ class Empresa {
 		), JSON_UNESCAPED_SLASHES);
 	}
 
-	//FUNÇÃO PARA TRAZER TODOS OS RESULTADOS DA TABELA
-	public static function getEmpresas(){
+	//FUNÇÃO PARA TRAZER TODOS OS RESULTADOS DA TABELA COM BASE NOS PARAMETROS DA CLASSE EMPREGADO.PHP
+	public static function getEmpresas($matricula, $nivelAcesso, $lotacaoFisica, $lotacaoAdm){
 
-		$sql = new Sql();
+		// SIMULAR OUTRO PERFIL DE ACESSO
+		// if ($matricula == 'c111710') {
+			
+		// 	$nivelAcesso = '300';
+		// 	$lotacaoFisica = '2692';
+		// 	$lotacaoAdm = '812';
 
-		return $sql->select("SELECT 
-									[NOME_CLIENTE]
-									,[CPF/CNPJ]
-									,[EMAIL_PRINCIPAL]
-									,[EMAIL_SECUNDARIO]
-									,[EMAIL_RESERVA] 
-								FROM 
-									tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO");
+		// }
+
+		// VERIFICA O NÍVEL DE ACESSO
+		switch ($nivelAcesso) {
+
+			// PERFIL AGÊNCIA
+			case '100':
+			
+				// VERIFICA SE O USUÁRIO ESTÁ DESTACADO EM OUTRA UNIDADE
+				if($lotacaoFisica != 0) {
+
+					$sql = new Sql();
+
+					$result =  $sql->select("SELECT 
+												[NOME_CLIENTE]
+												,[CPF/CNPJ]
+												,[EMAIL_PRINCIPAL]
+												,[EMAIL_SECUNDARIO]
+												,[EMAIL_RESERVA]
+												,[CO_PV]
+											FROM 
+												tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO
+											WHERE
+												[CO_PV] = :COD", array(
+													':COD'=>$lotacaoFisica
+												));
+
+					echo json_encode($result, JSON_UNESCAPED_SLASHES);
+
+				} else {
+
+					$sql = new Sql();
+
+					$result =  $sql->select("SELECT 
+												[NOME_CLIENTE]
+												,[CPF/CNPJ]
+												,[EMAIL_PRINCIPAL]
+												,[EMAIL_SECUNDARIO]
+												,[EMAIL_RESERVA]
+												,[CO_PV] 
+											FROM 
+												tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO
+											WHERE
+												[CO_PV] = :COD", array(
+													':COD'=>$lotacaoAdm
+												));
+
+					echo json_encode($result, JSON_UNESCAPED_SLASHES);
+				}
+				break;
+		
+			// PERFIL SR
+			case '300':
+
+				// VERIFICA SE O USUÁRIO ESTÁ DESTACADO EM OUTRA UNIDADE
+				if($lotacaoFisica != 0) {
+
+					$sql = new Sql();
+
+					$result =  $sql->select("SELECT 
+												[NOME_CLIENTE]
+												,[CPF/CNPJ]
+												,[EMAIL_PRINCIPAL]
+												,[EMAIL_SECUNDARIO]
+												,[EMAIL_RESERVA]
+												,[CO_PV] 
+											FROM 
+												tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO
+											WHERE
+												[CO_SR] = :COD", array(
+													':COD'=>$lotacaoFisica
+												));
+
+					echo json_encode($result, JSON_UNESCAPED_SLASHES);
+
+				} else {
+
+					$sql = new Sql();
+
+					$result =  $sql->select("SELECT 
+												[NOME_CLIENTE]
+												,[CPF/CNPJ]
+												,[EMAIL_PRINCIPAL]
+												,[EMAIL_SECUNDARIO]
+												,[EMAIL_RESERVA]
+												,[CO_PV] 
+											FROM 
+												tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO
+											WHERE
+												[CO_SR] = :COD", array(
+													':COD'=>$lotacaoAdm
+												));
+
+					echo json_encode($result, JSON_UNESCAPED_SLASHES);
+				}
+				break;
+			
+			// DEMAIS PERFIS
+			default:
+
+				$sql = new Sql();
+
+				$result =  $sql->select("SELECT 
+											[NOME_CLIENTE]
+											,[CPF/CNPJ]
+											,[EMAIL_PRINCIPAL]
+											,[EMAIL_SECUNDARIO]
+											,[EMAIL_RESERVA]
+											,[CO_PV] 
+										FROM 
+											tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO");
+
+				echo json_encode($result, JSON_UNESCAPED_SLASHES);
+		}
+		
 	}
 
 	// FUNÇÃO PARA RETORNAR O RESULTADO DE UM SEARCH
@@ -121,7 +235,8 @@ class Empresa {
 								,[CPF/CNPJ]
 								,[EMAIL_PRINCIPAL]
 								,[EMAIL_SECUNDARIO]
-								,[EMAIL_RESERVA] 
+								,[EMAIL_RESERVA]
+								,[CO_PV] 
 							FROM 
 								tbl_SIEXC_OPES_EMAIL_CLIENTES_CADASTRO
 							WHERE

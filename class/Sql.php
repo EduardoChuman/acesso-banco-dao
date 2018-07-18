@@ -6,12 +6,13 @@ ini_set('display_errors',1);
 class Sql extends PDO {
 
 	private $conn;
+
 	
 	// CRIA A CONEXÃO NO BANCO AUTOMATICAMENTE, ASSIM QUE CRIAR UM OBJETO SQL
 	public function __construct(){
-		/* MÉTODO COM REQUIRE */
-		//require_once("../../includes/database/sqlsrv.php");// TESTE VLAD
-		require_once("../../../includes/database/sqlsrv.php");//TESTES CHUMAN
+	// 	/* MÉTODO COM REQUIRE */
+	// 	//require_once("../../includes/database/sqlsrv.php");// TESTE VLAD
+		include("../../../includes/database/sqlsrv.php");//TESTES CHUMAN
 
 		$this->conn = new PDO("sqlsrv:Database=$db_name;server=$db_host",$db_user,$db_pass);
 		
@@ -22,7 +23,7 @@ class Sql extends PDO {
 
 		foreach ($parameters as $key => $value) {
 		
-		$this->setParam($statement, $key, $value);
+			$this->setParam($statement, $key, $value);
 
 		}
 	}
@@ -44,6 +45,8 @@ class Sql extends PDO {
 		$stmt->execute();
 
 		return $stmt;
+
+		$this->conn = null;
 
 	}
 

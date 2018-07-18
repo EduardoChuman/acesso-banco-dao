@@ -5,6 +5,7 @@ ini_set('display_errors',1);
 // CRIAÇÃO DA CLASSE
 class Empregado {
 	
+	// DEFINIÇÃO DOS ATRIBUTOS
 	private $matricula; 
 	private $nome;
 	private $lotacaoAdm;
@@ -13,7 +14,11 @@ class Empregado {
 	private $funcao;
 	private $dataAdmissao;
 
+	// MÉTODOS
+
 	// GETTERS E SETTERS DOS ATRIBUTOS
+	
+	// $matricula
 	public function getMatricula(){
 
 		return $this->matricula;
@@ -24,6 +29,8 @@ class Empregado {
 		$this->matricula = $value;
 
 	}
+
+	// $nome
 	public function getNome(){
 
 		return $this->nome;
@@ -34,6 +41,8 @@ class Empregado {
 		$this->nome = $value;
 		
 	}
+
+	// $lotacaoAdm
 	public function getLotacaoAdm(){
 
 		return $this->lotacaoAdm;
@@ -44,6 +53,8 @@ class Empregado {
 		$this->lotacaoAdm = $value;
 		
 	}
+
+	// $lotacaoFisica
 	public function getLotacaoFisica(){
 
 		return $this->lotacaoFisica;
@@ -54,6 +65,8 @@ class Empregado {
 		$this->lotacaoFisica = $value;
 		
 	}
+
+	// $nivelAcesso
 	public function getNivelAcesso(){
 
 		return $this->nivelAcesso;
@@ -64,6 +77,8 @@ class Empregado {
 		$this->nivelAcesso = $value;
 		
 	}
+
+	// $funcao
 	public function getFuncao(){
 
 		return $this->funcao;
@@ -74,6 +89,8 @@ class Empregado {
 		$this->funcao = $value;
 		
 	}
+
+	// $dataAdmissao
 	public function getDataAdmissao(){
 
 		return $this->dataAdmissao;
@@ -88,6 +105,7 @@ class Empregado {
 	// METODO MÁGICO PARA SETTAR TODOS OS ATRIBUTOS
 	public function __construct(){
 		
+		// ATRIBUIÇÃO DA VARIÁVEL MATRÍCULA
 		$this->setMatricula(substr($_SERVER["LOGON_USER"],strpos($_SERVER["LOGON_USER"], "\\")+1));
 
 		$sql = new Sql();
@@ -107,7 +125,7 @@ class Empregado {
 		if(!empty($result)){
 
 			$row = $result[0];
-
+			// ATRIBUIÇÃO DAS VARIÁVEIS LOTAÇÃO_ADM E NÍVEL DE ACESSO
 			$this->setLotacaoAdm($row['UNIDADE']);
 			$this->setNivelAcesso($row['NIVEL']);
 
@@ -134,6 +152,7 @@ class Empregado {
 
 			$row2 = $capturaDadosBanco[0];
 
+			// ATRIBUIÇÃO DAS VARIÁVEIS NOME, LOTAÇÃO_FISICA, FUNÇÃO E DATA_CONTRATAÇÃO
 			$this->setNome($row2['NOME']);
 			$this->setLotacaoFisica($row2['CODIGO_UNIDADE_LOTACAO_FISICA']);
 			$this->setFuncao($row2['FUNCAO']);
