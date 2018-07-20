@@ -51,12 +51,21 @@
 		// CRIAÇÃO DO OBJETO EMPREGADO
 		$usuario = new Empregado();
 		
-		// CRIA UM OBJETO EMPRESA
-		$pv = new Empresa();
+		// // CRIA UM OBJETO EMPRESA
+		// $pv = new Empresa();
 
-		// FUNÇÃO PARA TRAZER A RELAÇÃO DAS EMPRESAS COM BASE NO PERFIL DE ACESSO, LOTAÇÃO FÍSICA OU LOTAÇÃO ADMINISTRATIVA - OBS: A MATRICULA É UTILIZADA SOMENTE PARA TESTE DE PERFIL
-		$pv->getEmpresas($usuario->getMatricula(),$usuario->getNivelAcesso(), $usuario->getLotacaoFisica(), $usuario->getLotacaoAdm());
-		// $pv->getEmpresas();
+		// // FUNÇÃO PARA TRAZER A RELAÇÃO DAS EMPRESAS COM BASE NO PERFIL DE ACESSO, LOTAÇÃO FÍSICA OU LOTAÇÃO ADMINISTRATIVA - OBS: A MATRICULA É UTILIZADA SOMENTE PARA TESTE DE PERFIL
+		// $pv->getEmpresas($usuario->getMatricula(),$usuario->getNivelAcesso(), $usuario->getLotacaoFisica(), $usuario->getLotacaoAdm());
+		
+
+		// SIMULAÇÃO DE COMO REALIZAR O REGISTRO DE UM HISTÓRICO
+		$hist = new Historico(1, $usuario->getLotacaoAdm(), $usuario->getLotacaoFisica(), $usuario->getNome(), $usuario->getMatricula());
+
+		echo $hist;
+		$hist->setHistorico("edu.chuman@hotmail.com");
+		echo "<hr/>";
+		echo $hist->getHistorico();
+
 
 		?>
 </body>
